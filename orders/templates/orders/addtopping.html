@@ -1,0 +1,30 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+ 
+{% endblock %}
+
+{% block body %}
+<h1>Добавить Топпинг</h1>
+
+
+
+
+{% endblock %}
+
+<form action="{% url 'cart' %}" method="post">	
+	{% csrf_token %}
+{% for topping in toppings %}
+
+	<div class="checkbox">
+	  <label><input type="checkbox" value="">{{ topping }}</label>
+	</div>
+
+
+{% endfor %}
+<button class="btn btn-primary" type="submit">Добавить в корзину</button>
+</form>
+
+
+
+<a href="{% url 'cart' %}">Вернулься к корзине</a>

@@ -1,0 +1,19 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+ 
+{% endblock %}
+
+{% block body %}
+<h1>Регистрация</h1>
+
+ <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+<button type="submit">Зарегестрироваться</button>
+    </form>
+
+
+    Уже есть аккаунт? <a href="{% url 'index' %}" target="blank"><strong>Войти</strong></a>.
+
+{% endblock %}
