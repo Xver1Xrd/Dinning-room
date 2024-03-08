@@ -5,12 +5,10 @@
 {% endblock %}
 
 {% block body %}
+
 <!-- <h1>Hello {{ user }}</h1> -->
 
 <!-- <div>Currently logged in as: {{ user.username }}</div> -->
-
-
-
 
 <div class="container">
 	<h1>Меню</h1>
@@ -19,22 +17,27 @@
 	<h2> {{ category}} </h2>
 	<div class="row">
 		{% for item in items %}
-		{% if item.category == category %}
+		{% if item.category == category and item.price > 0 and item.amount > 0 %}
 	    <div class="col-sm-4">
 			<div class="form-group">
-				<h5> 
-					
-					<label for="exampleFormControlSelect1">
-						<input name="item_id" value="{{item.id}}" type="hidden"/>
-						<div> {{ item }}</div>
-					</label>			    	
-					
-				</h5>
-
-	    			<!-- Button trigger modal -->
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{item.id}}">
-				  Добавить в корзину
-				</button>
+				<div class="card" style="width: 18rem;">
+					<img src="static\images\{{ item.image }}"  class="card-img-top" alt="Картинка">
+					<div class="card-body">
+						<h5> 
+							<label for="exampleFormControlSelect1">
+								<input name="item_id" value="{{item.id}}" type="hidden"/>
+								<div> {{ item.name }}</div>
+								<div>Доступно: {{item.amount}}</div> 
+								<div>Цена: {{ item.price }}₽</div>
+									
+							</label>			    	
+						</h5>
+					  <!-- <p class="card-text">Тут будет описание</p> -->
+					  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter{{item.id}}">
+						Добавить в корзину
+					  </button>
+					</div>
+				  </div>
 
 			<!-- Modal -->
 				<!-- Modal -->
@@ -65,7 +68,7 @@
 						    <select class="form-control" id="exampleFormControlSelect1" name="size_id" >
 						    	{% for size in sizes %}
 						     {% if size.name == "Large" %}
-							  <option value="{{size.id}}">{{ size.name }} +₽ {{ item.base_price_id.large_supp }} </option>
+							  <option value="{{size.id}}">{{ size.name }} +₽ {{ item.price.large_supp }} </option>
 							  {% else %}
 							  <option value="{{size.id}}">{{ size.name }} </option>
 
@@ -144,6 +147,4 @@
 
 
 {% endblock %}
-
-
 

@@ -76,7 +76,6 @@ def cart_view(request):
 		user = request.user
 
 		p = Item_List.objects.get(pk=item_id)
-		price_id = p.base_price_id.id
 
 		# Calculate Price:
 
@@ -92,14 +91,14 @@ def cart_view(request):
 
 		topping_price = Price_List.objects.get(name="Topping")
 		extra_price = Price_List.objects.get(name="Extra")
-		item = Price_List.objects.get(pk=price_id)
+		# item = Price_List.objects.get(pk=price_id)
 
 
 		# if large option selected
 		if size and int(size) == 7:
-			total_price = item.base_price + item.large_supp + count_topping*topping_price.large_supp + count_extra*extra_price.base_price
+			total_price = p.price + p.large_supp + count_topping*topping_price.large_supp + count_extra*extra_price.base_price
 		else:
-			total_price = item.base_price + count_topping*topping_price.base_price + count_extra*extra_price.base_price
+			total_price = p.price + count_topping*topping_price.base_price + count_extra*extra_price.base_price
 
 		# Add new item to cart
 		if size == None:
@@ -171,22 +170,16 @@ def order_view(request):
 		for item in cart:
 			item.is_current=False
 			item.save()
-	messages.success(request,"Thank you for shopping with us, your order has been placed.")
+	messages.success(request,"спасибо за покупку")
 	return HttpResponseRedirect(reverse("index"))
 
-def removefromcart_view(request, cart_id):
+def removefromcart_view(request, cart_id,):
 	# view topping from cart
 
 	item_toremove = Cart_List.objects.get(pk=cart_id)
 	item_toremove.delete()
-	messages.info(request,"This item has been removed from your cart.")
-	return HttpResponseRedirect(reverse("cart"))
+	messages.info(request,"Продукт удален из корзины")
+	return HttpResponseRedirect(reverse("Корзина"))
 
-
-
-
-
-
-
-
-
+def payment(request,):
+	return render(request, "orders/payment.html")

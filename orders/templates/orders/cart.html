@@ -13,8 +13,18 @@
   <div class="form-group">
   	{% for item in cart_items %}
 
-<li> <input type="hidden" value="{{item.id}}" name="cart_id"> {{ item }}
-	<small><a href="{% url 'removefromcart' item.id %}"> Удалить </a></small>
+<!-- <li> <input type="hidden" value="{{item.id}}" name="cart_id"> {{ item }} -->
+<li> 
+	<div class="card" style="width: 18rem;">
+		<img src="static\images\{{ item.image }}" class="card-img-top" alt="Картинка">
+		<div class="card-body">
+			<h5> 
+				<label for="exampleFormControlSelect1">
+					<input type="hidden" value="{{item.id}}" name="cart_id"> {{ item }}
+					<div>{{ item }}</div>
+				</label>			    	
+			</h5>
+	<button type="{% url 'removefromcart' item.id %}" class="btn btn-outline-danger">Удалить</button>
 
 	<!-- <a href="{% url 'topping' item.id %}">view topping</a> -->
 
@@ -25,9 +35,11 @@
 {% endfor %}
    <hr>
 
+
+
 <h4>Суммарная цена : ₽{{total_price|floatformat:2|intcomma}}</h4>
   </div>
-  <button type="submit" class="btn btn-primary">Place order</button>
+  <button type="submit" class="btn btn-primary">Оплатить</button>
 </form>
 {% else %}
 
@@ -58,13 +70,3 @@
 
 
 {% endblock %}
-
-<!-- <a href="{% url 'topping' cart.id %}">toppings</a> -->
-<!-- <a href="{% url 'removefromcart' item.id %}">Delete</a> -->
-
-	
-		<!-- {% if item.menu_id.topping_qty %} -->
-
-	<!-- <a href="{% url 'topping' item.id %}">view topping</a> -->
-		<!-- {% endif %} -->
-

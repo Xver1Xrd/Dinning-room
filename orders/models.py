@@ -45,11 +45,13 @@ class Price_List(models.Model):
 class Item_List(models.Model):
 	category = models.ForeignKey(Category, on_delete=models.CASCADE)
 	name = models.CharField(max_length=64)
-	base_price_id = models.ForeignKey(Price_List, on_delete=models.CASCADE)
+	price = models.FloatField(default=0)
+	image = models.CharField(max_length=128, default="img.jpg")
+	amount = models.IntegerField(default=0)
 
 
 	def __str__(self):
-		return f" {self.name}, Цена : {self.base_price_id.base_price}₽"
+		return f"{self.image} {self.name}, Цена : {self.price}₽"
 # {self.category.name}
 
 class Cart_List(models.Model):
