@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
 	name = models.CharField(max_length=64)
 	custom_topping = models.BooleanField(default=False)
-	custom_extra = models.BooleanField(default=False)
+
 	custom_size = models.BooleanField(default=False)
 
 
@@ -26,10 +26,7 @@ class Topping(models.Model):
 	def __str__(self):
 		return f"{self.name}"
 
-class Extra(models.Model):
-	name = models.CharField(max_length=64)
-	def __str__(self):
-		return f"{self.name}"
+
 
 		
 class Price_List(models.Model):
@@ -48,6 +45,7 @@ class Item_List(models.Model):
 	price = models.FloatField(default=0)
 	image = models.CharField(max_length=128, default="img.jpg")
 	amount = models.IntegerField(default=0)
+	# description = models.CharField(max_length=200, default="")
 
 
 	def __str__(self):
@@ -58,22 +56,16 @@ class Cart_List(models.Model):
 	user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 	item_id = models.ForeignKey(Item_List, on_delete=models.CASCADE)
 	size = models.ForeignKey(Size, on_delete=models.CASCADE, null=True, blank=True,)
-	extra = models.ManyToManyField(Extra, blank=True)
 	toppings = models.ManyToManyField(Topping, blank=True)
 	calculated_price = models.FloatField()
 	is_current = models.BooleanField(default=True)
 
 	def __str__(self):
-		topping_list = []
-		for topping in self.toppings.all():
-			topping_list.append(topping)
-		extra_list = []
-		for extra in self.extra.all():
-			extra_list.append(extra)
 		if self.size ==None:
-			return f"{self.item_id.category.name} {self.item_id.name} - Price: ${self.calculated_price}"
+			return f" {self.item_id.name} - Цена: ₽{self.calculated_price}"
 		else:
-			return f"{self.item_id.category.name} {self.item_id.name}, {self.size.name} { topping_list } { extra_list }- Price: ${self.calculated_price}"
+			return f""
+		# 	return f"{self.item_id.name} - Цена: ₽{self.calculated_price}"
 	
 
 class Order(models.Model):
@@ -83,7 +75,7 @@ class Order(models.Model):
 	
 	def __str__(self):
 		if self.complete == False:
-			return f"{self.user_id}, Status: On Order"
+			return f"{self.user_id}, Готовится"
 		else:
-			return f"{self.user_id}, Status: Complete"
+			return f"{self.user_id}, Готов"
 		

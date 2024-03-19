@@ -11,7 +11,7 @@ from orders.admin import CartAdmin
 
 
 
-from .models import Size, Category, Topping, Price_List, Item_List, Cart_List, Extra, Order
+from .models import  Size, Category, Price_List, Item_List, Cart_List, Order
 
 # Create your views here.
 def index(request):
@@ -20,8 +20,6 @@ def index(request):
 	context = {
 		"categories" : Category.objects.exclude(name="Topping").all(),
 		"items" : Item_List.objects.all(),
-		"toppings" : Topping.objects.all(),
-		"extras" : Extra.objects.all(), 
 		"sizes" : Size.objects.all(),
 		"user" : request.user
 	}
@@ -70,35 +68,20 @@ def cart_view(request):
 	
 	if request.method == "POST":
 		item_id = request.POST.get("item_id")
-		toppings = request.POST.getlist("topping_id")
-		extras = request.POST.getlist("extra_id")
 		size = request.POST.get("size_id")
 		user = request.user
 
 		p = Item_List.objects.get(pk=item_id)
 
 		# Calculate Price:
-
-		# Calculate topping quantity
-		count_topping = 0
-		for topping in toppings: 
-			count_topping+=1
-		# Calculate extra quantity
-		count_extra = 0
-		for extra in extras: 
-			count_extra+=1
-
-
-		topping_price = Price_List.objects.get(name="Topping")
-		extra_price = Price_List.objects.get(name="Extra")
 		# item = Price_List.objects.get(pk=price_id)
 
 
 		# if large option selected
 		if size and int(size) == 7:
-			total_price = p.price + p.large_supp + count_topping*topping_price.large_supp + count_extra*extra_price.base_price
+			total_price = p.price
 		else:
-			total_price = p.price + count_topping*topping_price.base_price + count_extra*extra_price.base_price
+			total_price = p.price
 
 		# Add new item to cart
 		if size == None:
@@ -109,13 +92,8 @@ def cart_view(request):
 		# add item to cart
 		new_item.save()
 
-		# add toppping and extras to item
-		for topping in toppings: 
-			new_item.toppings.add(topping)
-		for extra in extras: 
-			new_item.extra.add(extra)
 		# return HttpResponseRedirect(reverse("cart"))
-		messages.success(request, "Meal added to cart!")
+		messages.success(request, "Блюдо добавлено в корзину!")
 		return HttpResponseRedirect(reverse("index"))
 		# return render(request, "orders/index.html", {"message": "Meal added to cart!"})
 
@@ -123,7 +101,7 @@ def cart_view(request):
 		try:
 			cart = Cart_List.objects.filter(user_id=request.user, is_current=True)
 		except Cart_List.DoesNotExist:
-			raise Http404("Cart does not exist")
+			raise Http404("Такого домена еще нет")
 		
 		total_price = cart.aggregate(Sum('calculated_price'))['calculated_price__sum']
 
@@ -137,17 +115,6 @@ def cart_view(request):
 
 		return render(request, "orders/cart.html", context)
 
-def topping_view(request, cart_id):
-	# view topping from cart
-
-	try:
-		pizza = Cart_List.objects.get(pk=cart_id)
-	except CartAdmin.DoesNotExist:
-		raise Http404("Pizza not in Cart or does not include topping")
-	context = {
-		"toppings" : pizza.toppings.all()
-		}
-	return render(request, "orders/topping.html", context)
 
 
 def order_view(request):
@@ -170,7 +137,7 @@ def order_view(request):
 		for item in cart:
 			item.is_current=False
 			item.save()
-	messages.success(request,"спасибо за покупку")
+	messages.success(request,"👍 👍🏻 👍🏼 👍🏽 👍🏾 👍🏿")
 	return HttpResponseRedirect(reverse("index"))
 
 def removefromcart_view(request, cart_id,):

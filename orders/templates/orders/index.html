@@ -1,7 +1,7 @@
 {% extends "orders/base.html" %}
 
 {% block title %}
- Menu
+ Меню
 {% endblock %}
 
 {% block body %}
@@ -60,30 +60,12 @@
 				    			<input name="item_id" value="{{item.id}}" type="hidden"/>
 				    			<div> {{ item }}</div>
 				    		</label>
-						    	
+
 			       
 			      			
-				    		{% if category.custom_size == True %}
-			      			<label for="exampleFormControlSelect1">Размер:</label>
-						    <select class="form-control" id="exampleFormControlSelect1" name="size_id" >
-						    	{% for size in sizes %}
-						     {% if size.name == "Large" %}
-							  <option value="{{size.id}}">{{ size.name }} +₽ {{ item.price.large_supp }} </option>
-							  {% else %}
-							  <option value="{{size.id}}">{{ size.name }} </option>
-
-							  {% endif %}
-						      	{% endfor %}
-						      </select>
-						      {% endif %}
+				    		
 					 	</div>
-					 	{% if category.custom_topping == True %}
-					 	{% for topping in toppings %}
-									<div class="checkbox">
-									  <label><input type="checkbox" name="topping_id" value="{{topping.id}}">{{ topping }}</label>
-									</div>
-						{% endfor %}
-						{% endif %}
+
 
 						{% if category.custom_extra == True %}
 								{% for extra in extras %}

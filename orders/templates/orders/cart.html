@@ -1,7 +1,7 @@
 {% extends "orders/base.html" %}
 {% load humanize %}
 {% block title %}
- 
+ Корзина
 {% endblock %}
 
 {% block body %}
@@ -16,17 +16,14 @@
 <!-- <li> <input type="hidden" value="{{item.id}}" name="cart_id"> {{ item }} -->
 <li> 
 	<div class="card" style="width: 18rem;">
-		<img src="static\images\{{ item.image }}" class="card-img-top" alt="Картинка">
 		<div class="card-body">
 			<h5> 
 				<label for="exampleFormControlSelect1">
-					<input type="hidden" value="{{item.id}}" name="cart_id"> {{ item }}
+					<input type="hidden" value="{{item.id}}" name="cart_id">
 					<div>{{ item }}</div>
 				</label>			    	
 			</h5>
-	<button type="{% url 'removefromcart' item.id %}" class="btn btn-outline-danger">Удалить</button>
-
-	<!-- <a href="{% url 'topping' item.id %}">view topping</a> -->
+	<button type="{% url 'removefromcart' item.id %}" class="btn btn-outline-danger">Очистить корзину</button>
 
 </li>
 
@@ -37,9 +34,10 @@
 
 
 
-<h4>Суммарная цена : ₽{{total_price|floatformat:2|intcomma}}</h4>
+<h4>Суммарная цена : ₽ {{total_price|floatformat:2|intcomma}}</h4>
   </div>
-  <button type="submit" class="btn btn-primary">Оплатить</button>
+  <!-- <button type="submit" class="btn btn-primary">Оплатить</button> -->
+  <a href="/payment" class="btn btn-primary" type="submit" role="button" data-bs-toggle="button">Оплатить</a>
 </form>
 {% else %}
 
@@ -57,10 +55,7 @@
 <h4>Предыдущие заказы</h4>
 {% for item in cart_items_ordered %}
 
-<li> {{ item }}
-	
-
-</li>
+<li> {{ item }}</li>
 
 
 

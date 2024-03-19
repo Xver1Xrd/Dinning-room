@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Size, Category, Topping, Price_List, Item_List, Cart_List, Extra, Order
+from .models import Size, Category, Price_List, Item_List, Cart_List, Order
 
 
 # Register your models here.
@@ -20,11 +20,9 @@ class CartAdmin(admin.ModelAdmin):
 
 admin.site.register(Size)
 admin.site.register(Category)
-admin.site.register(Topping, ToppingAdmin)
 admin.site.register(Price_List)
 admin.site.register(Item_List)
 admin.site.register(Cart_List, CartAdmin)
-admin.site.register(Extra)
 admin.site.register(Order)
 
 
