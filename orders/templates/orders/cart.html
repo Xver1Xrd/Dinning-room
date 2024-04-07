@@ -11,33 +11,37 @@
 		<form action="{% url 'order' %}" method="post">
 {% csrf_token %}
   <div class="form-group">
+	<ul>
   	{% for item in cart_items %}
 
 <!-- <li> <input type="hidden" value="{{item.id}}" name="cart_id"> {{ item }} -->
 <li> 
-	<div class="card" style="width: 18rem;">
+	<!-- <div class="card" style="width: 18rem;">
 		<div class="card-body">
 			<h5> 
 				<label for="exampleFormControlSelect1">
-					<input type="hidden" value="{{item.id}}" name="cart_id">
-					<div>{{ item }}</div>
-				</label>			    	
+					<input type="hidden" value="{{item.id}}" name="cart_id"> -->
+					<p>{{ item }}</p>
+				<!-- </label>			    	
 			</h5>
-	<button type="{% url 'removefromcart' item.id %}" class="btn btn-outline-danger">Очистить корзину</button>
-
+	
+		</div>
+	</div> -->
 </li>
 
 
 
 {% endfor %}
+</ul>
+
    <hr>
 
 
 
-<h4>Суммарная цена : ₽ {{total_price|floatformat:2|intcomma}}</h4>
+<h4>Суммарная цена : ₽ {{total_price|floatformat:2}}</h4>
   </div>
   <!-- <button type="submit" class="btn btn-primary">Оплатить</button> -->
-  <a href="/payment" class="btn btn-primary" type="submit" role="button" data-bs-toggle="button">Оплатить</a>
+  <a href="/payment" class="btn btn-primary" type="submit" role="button" data-bs-toggle="button">Оплатить</a> <button type="{% url 'removefromcart' 0 %}" class="btn btn-outline-danger">Очистить корзину</button>
 </form>
 {% else %}
 
@@ -52,6 +56,7 @@
 <hr>
 
 {% if cart_items_ordered %}
+
 <h4>Предыдущие заказы</h4>
 {% for item in cart_items_ordered %}
 

@@ -1,17 +1,17 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth.models import User
+
 from django.db.models import Sum
 from django.contrib import messages
 
-from orders.admin import CartAdmin
 
 
 
-from .models import  Size, Category, Price_List, Item_List, Cart_List, Order
+
+from .models import  Size, Category, Item_List, Cart_List, Order
 
 # Create your views here.
 def index(request):
