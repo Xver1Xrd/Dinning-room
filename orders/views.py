@@ -150,3 +150,7 @@ def removefromcart_view(request, cart_id,):
 
 def payment(request,):
 	return render(request, "orders/payment.html")
+
+
+def number(request):
+	return render(request, "orders/random.html")

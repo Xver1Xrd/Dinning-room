@@ -1,19 +1,23 @@
-{% extends "orders/base.html" %}
+        {% extends "orders/base.html" %}
 
-{% block title %}
- Регистрация
-{% endblock %}
+        {% block title %}
+        Регистрация
+        {% endblock %}
 
-{% block body %}
-<h1>Регистрация</h1>
+        {% block body %}
+        <h1>Регистрация</h1>
 
- <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-<button type="submit">Зарегестрироваться</button>
-    </form>
-
-
-    Уже есть аккаунт? <a href="{% url 'index' %}" target="blank"><strong>Войти</strong></a>.
-
-{% endblock %}
+        <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+        <!-- <button type="submit">Зарегестрироваться</button> -->
+        <button type="submit" class="btn btn-primary">Зарегестрироваться</button>
+            </form>
+            
+            <br>
+            <!-- Уже есть аккаунт? <a href="{% url 'index' %}" target="blank"><strong>Войти</strong></a>. -->
+            Уже есть аккаунт?<a href="{% url 'index' %}" target="blank"><button
+                 type="button" class="btn btn-outline-primary" >Войти
+                </button></a>
+        </br>
+        {% endblock %}
